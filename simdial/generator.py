@@ -102,7 +102,8 @@ class Generator(object):
         sys_nlg = SysNlg(domain, complexity)
         usr_nlg = UserNlg(domain, complexity)
 
-        bar = progressbar.ProgressBar(max_value=num_sess)
+        bar = progressbar.ProgressBar(maxval=num_sess)
+        bar.start()
         for i in range(num_sess):
             bar.update(i)
             usr = User(domain, complexity)
