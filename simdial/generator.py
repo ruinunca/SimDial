@@ -13,6 +13,7 @@ import numpy as np
 import sys
 import os
 import re
+import pdb
 
 class Generator(object):
     """
@@ -59,6 +60,37 @@ class Generator(object):
 
         if output_file is not None:
             f.close()
+
+    @staticmethod
+    def print_db(database, in_json, domain_spec, output_file=None):
+        """
+        print the database to a file or STDOUT
+
+        :param database: a database class generated in database.py
+        """
+        f = sys.stdout if output_file is None else open(output_file, "wb")
+
+        if in_json:
+            combo = []
+            for idx, entry in enumerate(database.sys_table):
+                usr_table_entry = database.table[idx]
+                tmp_dict = {
+                            "type" : domain_spec.name,
+                            "name"   : str(idx)
+                            }
+                for i in range(database.num_sys_slots):
+                    tmp_dict[domain_spec.sys_slots[i][0]] = domain_spec.sys_slots[i][2][entry[i + 1]]
+
+                for i in range(database.num_usr_slots):
+                    tmp_dict[domain_spec.usr_slots[i][0]] = domain_spec.usr_slots[i][2][usr_table_entry[i]]
+
+                combo.append(tmp_dict)
+
+            json.dump(combo, f, indent=4)
+
+        if output_file is not None:
+            f.close()
+
 
     @staticmethod
     def print_stats(dialogs):
@@ -118,6 +150,12 @@ class Generator(object):
                 sys_r, sys_t, sys_as, sys_s = sys.step(noisy_usr_as, conf)
                 sys_utt, sys_str_as = sys_nlg.generate_sent(sys_as, domain=domain)
                 dialog.append(self.pack_msg("SYS", sys_utt, actions=sys_str_as, domain=domain.name, state=sys_s))
+                # ##########################
+                # print('**********system**************')
+                # print(sys_utt)
+                # print(sys_as)
+                # pdb.set_trace()
+                # ##########################
 
                 if sys_t:
                     break
@@ -130,7 +168,12 @@ class Generator(object):
                 noisy_usr_utt = word_channel.transmit2sys(usr_utt)
 
                 dialog.append(self.pack_msg("USR", noisy_usr_utt, actions=noisy_usr_as, conf=conf, domain=domain.name))
-
+                # ##########################
+                # print('********user************')
+                # print(usr_utt)
+                # print(usr_as)
+                # pdb.set_trace()
+                # ##########################
             dialogs.append(dialog)
 
         return dialogs
@@ -141,6 +184,15 @@ class Generator(object):
 
         # create meta specifications
         domain = Domain(domain_spec)
+        
+        # generate the database file
+        db_json_file_name = "{}-{}-{}-DB.{}".format(domain_spec.name,
+                                         complexity_spec.__name__,
+                                         size, 'json')
+
+        db_json_file_path = os.path.join(name, db_json_file_name)
+        self.print_db(domain.db, True, domain_spec, db_json_file_path)
+
         complex = Complexity(complexity_spec)
 
         # generate the corpus conditioned on domain & complexity
