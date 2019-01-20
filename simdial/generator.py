@@ -42,8 +42,8 @@ class Generator(object):
         f = sys.stdout if output_file is None else open(output_file, "wb")
 
         if in_json:
-            combo = {'dialogs': dialogs, 'meta': domain_spec.to_dict()}
-            json.dump(combo, f, indent=2)
+            # combo = {'dialogs': dialogs, 'meta': domain_spec.to_dict()}
+            json.dump(dialogs, f, indent=4)
         else:
             for idx, d in enumerate(dialogs):
                 f.write("## DIALOG %d ##\n" % idx)
@@ -145,17 +145,13 @@ class Generator(object):
             noisy_usr_as = []
             dialog = []
             conf = 1.0
+            turn_num = 0
+
+            sys_r, sys_t, sys_as, sys_s = sys.step(noisy_usr_as, conf)
+            sys_utt, sys_str_as = sys_nlg.generate_sent(sys_as, domain=domain)
+
+
             while True:
-                # make a decision
-                sys_r, sys_t, sys_as, sys_s = sys.step(noisy_usr_as, conf)
-                sys_utt, sys_str_as = sys_nlg.generate_sent(sys_as, domain=domain)
-                dialog.append(self.pack_msg("SYS", sys_utt, actions=sys_str_as, domain=domain.name, state=sys_s))
-                # ##########################
-                # print('**********system**************')
-                # print(sys_utt)
-                # print(sys_as)
-                # pdb.set_trace()
-                # ##########################
 
                 if sys_t:
                     break
@@ -166,15 +162,47 @@ class Generator(object):
                 noisy_usr_as, conf = action_channel.transmit2sys(usr_as)
                 usr_utt = usr_nlg.generate_sent(noisy_usr_as)
                 noisy_usr_utt = word_channel.transmit2sys(usr_utt)
+                # dialog.append(self.pack_msg("USR", noisy_usr_utt, actions=noisy_usr_as, conf=conf, domain=domain.name))
 
-                dialog.append(self.pack_msg("USR", noisy_usr_utt, actions=noisy_usr_as, conf=conf, domain=domain.name))
-                # ##########################
-                # print('********user************')
-                # print(usr_utt)
-                # print(usr_as)
-                # pdb.set_trace()
-                # ##########################
-            dialogs.append(dialog)
+                # make a decision
+                sys_r, sys_t, sys_as, sys_s = sys.step(noisy_usr_as, conf)
+                sys_utt, sys_str_as = sys_nlg.generate_sent(sys_as, domain=domain)
+                # dialog.append(self.pack_msg("SYS", sys_utt, actions=sys_str_as, domain=domain.name, state=state))
+
+                usr_tmp_dict = {
+                                "transcript" : noisy_usr_utt,
+                                "slu"        : [] 
+                                }
+                for inform_dict in sys_s["usr_slots"]:
+                    if inform_dict["max_val"] != None:
+                        usr_tmp_dict["slu"].append({
+                                                    "act"   : "inform",
+                                                    "slots" : [[
+                                                                inform_dict["name"][1:],
+                                                                inform_dict["max_val"]
+                                                                ]]    
+
+                                                    })
+                for request_dict in 
+
+
+                sys_tmp_dict = {
+                                "sent" : sys_utt
+                                }
+
+                dialog.append({
+                               "turn" : turn_num,
+                               "usr"  : usr_tmp_dict,
+                               "sys"  : sys_tmp_dict
+                              })
+                turn_num += 1
+
+
+            dialogs.append({"dial" : dialog})
+        # ##########################
+        # print('*********************')
+        # pdb.set_trace()
+        # ##########################        
 
         return dialogs
 
@@ -184,14 +212,14 @@ class Generator(object):
 
         # create meta specifications
         domain = Domain(domain_spec)
-        
-        # generate the database file
-        db_json_file_name = "{}-{}-{}-DB.{}".format(domain_spec.name,
-                                         complexity_spec.__name__,
-                                         size, 'json')
 
-        db_json_file_path = os.path.join(name, db_json_file_name)
-        self.print_db(domain.db, True, domain_spec, db_json_file_path)
+        # # generate the database file
+        # db_json_file_name = "{}-{}-{}-DB.{}".format(domain_spec.name,
+        #                                  complexity_spec.__name__,
+        #                                  size, 'json')
+
+        # db_json_file_path = os.path.join(name, db_json_file_name)
+        # self.print_db(domain.db, True, domain_spec, db_json_file_path)
 
         complex = Complexity(complexity_spec)
 
@@ -208,4 +236,4 @@ class Generator(object):
 
         json_file = os.path.join(name, json_file)
         self.pprint(corpus, True, domain_spec, json_file)
-        self.print_stats(corpus)
+        # self.print_stats(corpus)
