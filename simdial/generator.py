@@ -239,11 +239,7 @@ class Generator(object):
 
 
 
-            dialogs.append({"dial" : dialog})
-        # ##########################
-        # print('*********************')
-        # pdb.set_trace()
-        # ##########################        
+            dialogs.append({"dial" : dialog})       
 
         return dialogs
 
@@ -268,11 +264,7 @@ class Generator(object):
                                          size, 'json')
 
         OTGY_json_file_path = os.path.join(name, OTGY_json_file_name)
-        self.print_OTGY(domain_spec, True, OTGY_json_file_path)        
-        # ##########################
-        # print('*********************')
-        # pdb.set_trace()
-        # ##########################        
+        self.print_OTGY(domain_spec, True, OTGY_json_file_path)               
 
 
 
