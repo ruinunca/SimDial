@@ -245,13 +245,13 @@ class Generator(object):
         # create meta specifications
         domain = Domain(domain_spec)
 
-        # # generate the database file
-        # db_json_file_name = "{}-{}-{}-DB.{}".format(domain_spec.name,
-        #                                  complexity_spec.__name__,
-        #                                  size, 'json')
+        # generate the database file
+        db_json_file_name = "{}-{}-{}-DB.{}".format(domain_spec.name,
+                                         complexity_spec.__name__,
+                                         size, 'json')
 
-        # db_json_file_path = os.path.join(name, db_json_file_name)
-        # self.print_db(domain.db, True, domain_spec, db_json_file_path)
+        db_json_file_path = os.path.join(name, db_json_file_name)
+        self.print_db(domain.db, True, domain_spec, db_json_file_path)
 
         complex = Complexity(complexity_spec)
 
