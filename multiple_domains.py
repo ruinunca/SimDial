@@ -308,35 +308,35 @@ if __name__ == "__main__":
     weather_spec = WeatherSpec()
 
     # restaurant
-    gen_bot.gen_corpus("test_seq", rest_spec, complexity.CleanSpec, test_size)
-    # gen_bot.gen_corpus("test_seq", rest_spec, complexity.MixSpec, test_size)
-    # gen_bot.gen_corpus("train_seq", rest_spec, complexity.CleanSpec, train_size)
-    # gen_bot.gen_corpus("train", rest_spec, complexity.MixSpec, train_size)
+    gen_bot.gen_corpus("test", rest_spec, complexity.CleanSpec, test_size)
+    gen_bot.gen_corpus("test", rest_spec, complexity.MixSpec, test_size)
+    gen_bot.gen_corpus("train", rest_spec, complexity.CleanSpec, train_size)
+    gen_bot.gen_corpus("train", rest_spec, complexity.MixSpec, train_size)
 
-    # # restaurant style
-    # gen_bot.gen_corpus("test", rest_style_spec, complexity.CleanSpec, test_size)
-    # gen_bot.gen_corpus("test", rest_style_spec, complexity.MixSpec, test_size)
-    # gen_bot.gen_corpus("train", rest_style_spec, complexity.CleanSpec, train_size)
-    # gen_bot.gen_corpus("train", rest_style_spec, complexity.MixSpec, train_size)
+    # restaurant style
+    gen_bot.gen_corpus("test", rest_style_spec, complexity.CleanSpec, test_size)
+    gen_bot.gen_corpus("test", rest_style_spec, complexity.MixSpec, test_size)
+    gen_bot.gen_corpus("train", rest_style_spec, complexity.CleanSpec, train_size)
+    gen_bot.gen_corpus("train", rest_style_spec, complexity.MixSpec, train_size)
 
-    # # bus
-    # gen_bot.gen_corpus("test", bus_spec, complexity.CleanSpec, test_size)
-    # gen_bot.gen_corpus("test", bus_spec, complexity.MixSpec, test_size)
-    # gen_bot.gen_corpus("train", bus_spec, complexity.CleanSpec, train_size)
-    # gen_bot.gen_corpus("train", bus_spec, complexity.MixSpec, train_size)
+    # bus
+    gen_bot.gen_corpus("test", bus_spec, complexity.CleanSpec, test_size)
+    gen_bot.gen_corpus("test", bus_spec, complexity.MixSpec, test_size)
+    gen_bot.gen_corpus("train", bus_spec, complexity.CleanSpec, train_size)
+    gen_bot.gen_corpus("train", bus_spec, complexity.MixSpec, train_size)
 
-    # # weather
-    # gen_bot.gen_corpus("test", weather_spec, complexity.CleanSpec, test_size)
-    # gen_bot.gen_corpus("test", weather_spec, complexity.MixSpec, test_size)
-    # gen_bot.gen_corpus("train", weather_spec, complexity.CleanSpec, train_size)
-    # gen_bot.gen_corpus("train", weather_spec, complexity.MixSpec, train_size)
+    # weather
+    gen_bot.gen_corpus("test", weather_spec, complexity.CleanSpec, test_size)
+    gen_bot.gen_corpus("test", weather_spec, complexity.MixSpec, test_size)
+    gen_bot.gen_corpus("train", weather_spec, complexity.CleanSpec, train_size)
+    gen_bot.gen_corpus("train", weather_spec, complexity.MixSpec, train_size)
 
-    # # movie
-    # gen_bot.gen_corpus("test", movie_spec, complexity.CleanSpec, test_size)
-    # gen_bot.gen_corpus("test", movie_spec, complexity.MixSpec, test_size)
-    # gen_bot.gen_corpus("train", movie_spec, complexity.CleanSpec, train_size)
-    # gen_bot.gen_corpus("train", movie_spec, complexity.MixSpec, train_size)
+    # movie
+    gen_bot.gen_corpus("test", movie_spec, complexity.CleanSpec, test_size)
+    gen_bot.gen_corpus("test", movie_spec, complexity.MixSpec, test_size)
+    gen_bot.gen_corpus("train", movie_spec, complexity.CleanSpec, train_size)
+    gen_bot.gen_corpus("train", movie_spec, complexity.MixSpec, train_size)
 
-    # # restaurant Pitt
-    # gen_bot.gen_corpus("test", rest_pitt_spec, complexity.MixSpec, test_size)
-    # gen_bot.gen_corpus("train", rest_pitt_spec, complexity.MixSpec, train_size)
+    # restaurant Pitt
+    gen_bot.gen_corpus("test", rest_pitt_spec, complexity.MixSpec, test_size)
+    gen_bot.gen_corpus("train", rest_pitt_spec, complexity.MixSpec, train_size)

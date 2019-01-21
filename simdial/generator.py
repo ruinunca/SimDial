@@ -91,6 +91,23 @@ class Generator(object):
         if output_file is not None:
             f.close()
 
+    @staticmethod
+    def print_OTGY(domain_spec, in_json, output_file=None):
+        f = sys.stdout if output_file is None else open(output_file, "wb")
+
+        if in_json:
+            info_dict = {}
+
+            for usr_slot in domain_spec.usr_slots:
+                info_dict[usr_slot[0]] = usr_slot[-1]
+            for sys_slot in domain_spec.sys_slots:
+                info_dict[sys_slot[0]] = sys_slot[-1]
+
+            combo = {"informable" : info_dict}
+        json.dump(combo, f, indent=4)
+
+        if output_file is not None:
+            f.close()
 
     @staticmethod
     def print_stats(dialogs):
@@ -174,15 +191,7 @@ class Generator(object):
 
                 if "\"RET\"" in noisy_usr_utt:
                     # change the last dialogue
-                    # sys_tmp_dict = {
-                    #                 "sent" : sys_utt
-                    #                 }
 
-                    # dialog.append({
-                    #                "turn" : turn_num,
-                    #                "usr"  : usr_tmp_dict,
-                    #                "sys"  : sys_tmp_dict
-                    #               })
                     dialog[-1]["sys"]["sent"] = sys_utt
 
                 else:
@@ -253,6 +262,20 @@ class Generator(object):
         db_json_file_path = os.path.join(name, db_json_file_name)
         self.print_db(domain.db, True, domain_spec, db_json_file_path)
 
+        # generate the entity file(OTGY.json)
+        OTGY_json_file_name = "{}-{}-{}-OTGY.{}".format(domain_spec.name,
+                                         complexity_spec.__name__,
+                                         size, 'json')
+
+        OTGY_json_file_path = os.path.join(name, OTGY_json_file_name)
+        self.print_OTGY(domain_spec, True, OTGY_json_file_path)        
+        # ##########################
+        # print('*********************')
+        # pdb.set_trace()
+        # ##########################        
+
+
+
         complex = Complexity(complexity_spec)
 
         # generate the corpus conditioned on domain & complexity
@@ -268,4 +291,6 @@ class Generator(object):
 
         json_file = os.path.join(name, json_file)
         self.pprint(corpus, True, domain_spec, json_file)
+        print("\nfinishing generating %s dialogue in domain: %s with complexity: %s \n" \
+             %(name, domain_spec.name, complexity_spec.__name__))
         # self.print_stats(corpus)
