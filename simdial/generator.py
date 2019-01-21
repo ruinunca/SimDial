@@ -134,8 +134,11 @@ class Generator(object):
         sys_nlg = SysNlg(domain, complexity)
         usr_nlg = UserNlg(domain, complexity)
 
+        sys_slots_list = [slot.name for slot in domain.sys_slots if slot.name != '#default']
+
         bar = progressbar.ProgressBar(maxval=num_sess)
         bar.start()
+
         for i in range(num_sess):
             bar.update(i)
             usr = User(domain, complexity)
@@ -169,33 +172,62 @@ class Generator(object):
                 sys_utt, sys_str_as = sys_nlg.generate_sent(sys_as, domain=domain)
                 # dialog.append(self.pack_msg("SYS", sys_utt, actions=sys_str_as, domain=domain.name, state=state))
 
-                usr_tmp_dict = {
-                                "transcript" : noisy_usr_utt,
-                                "slu"        : [] 
-                                }
-                for inform_dict in sys_s["usr_slots"]:
-                    if inform_dict["max_val"] != None:
-                        usr_tmp_dict["slu"].append({
-                                                    "act"   : "inform",
-                                                    "slots" : [[
-                                                                inform_dict["name"][1:],
-                                                                inform_dict["max_val"]
-                                                                ]]    
+                if "\"RET\"" in noisy_usr_utt:
+                    # change the last dialogue
+                    # sys_tmp_dict = {
+                    #                 "sent" : sys_utt
+                    #                 }
 
-                                                    })
-                for request_dict in 
+                    # dialog.append({
+                    #                "turn" : turn_num,
+                    #                "usr"  : usr_tmp_dict,
+                    #                "sys"  : sys_tmp_dict
+                    #               })
+                    dialog[-1]["sys"]["sent"] = sys_utt
+
+                else:
+                    # append a new dialogue
+                    usr_tmp_dict = {
+                                    "transcript" : noisy_usr_utt,
+                                    "slu"        : [] 
+                                    }
+                    for inform_dict in sys_s["usr_slots"]:
+                        if inform_dict["max_val"] != None:
+                            usr_tmp_dict["slu"].append({
+                                                        "act"   : "inform",
+                                                        "slots" : [[
+                                                                    inform_dict["name"][1:],
+                                                                    inform_dict["max_val"]
+                                                                    ]]    
+    
+                                                        })
+                    for action_dict in noisy_usr_as:
+                        if action_dict["act"] == "request" and  \
+                            action_dict["parameters"][0][0] in sys_slots_list:
+                        
+                            usr_tmp_dict["slu"].insert(0, {
+                                                           "act"   : "request",
+                                                           "slots" : [[
+                                                                       "slot",
+                                                                       action_dict["parameters"][0][0][1:]]]
+    
+                    })
 
 
-                sys_tmp_dict = {
-                                "sent" : sys_utt
-                                }
 
-                dialog.append({
-                               "turn" : turn_num,
-                               "usr"  : usr_tmp_dict,
-                               "sys"  : sys_tmp_dict
-                              })
-                turn_num += 1
+                    sys_tmp_dict = {
+                                    "sent" : sys_utt
+                                    }
+
+                    dialog.append({
+                                   "turn" : turn_num,
+                                   "usr"  : usr_tmp_dict,
+                                   "sys"  : sys_tmp_dict
+                                  })
+    
+                    turn_num += 1
+
+
 
 
             dialogs.append({"dial" : dialog})
