@@ -4,6 +4,7 @@ from simdial.domain import Domain, DomainSpec
 from simdial.generator import Generator
 from simdial import complexity
 import string
+import sys
 
 
 class RestSpec(DomainSpec):
@@ -40,16 +41,16 @@ class RestSpec(DomainSpec):
                                         "Recommend me a place to eat."]}
                 }
 
-    usr_slots = [("loc", "location city", ["Pittsburgh", "New York", "Boston", "Seattle",
-                                           "Los Angeles", "San Francisco", "San Jose",
-                                           "Philadelphia", "Washington DC", "Austin"]),
+    usr_slots = [("loc", "location city", ["Pittsburgh", "New_York", "Boston", "Seattle",
+                                           "Los_Angeles", "San_Francisco", "San_Jose",
+                                           "Philadelphia", "Washington_DC", "Austin"]),
                  ("food_pref", "food preference", ["Thai", "Chinese", "Korean", "Japanese",
                                                    "American", "Italian", "Indian", "French",
                                                    "Greek", "Mexican", "Russian", "Hawaiian"])]
 
     sys_slots = [("open", "if it's open now", ["open", "closed"]),
                  ("price", "average price per person", ["cheap", "moderate", "expensive"]),
-                 ("parking", "if it has parking", ["street parking", "valet parking", "no parking"])]
+                 ("parking", "if it has parking", ["street_parking", "valet_parking", "no_parking"])]
 
     db_size = 100
 
@@ -88,16 +89,16 @@ class RestStyleSpec(DomainSpec):
                                         "Recommend me a place to eat."]}
                 }
 
-    usr_slots = [("loc", "location city", ["Pittsburgh", "New York", "Boston", "Seattle",
-                                           "Los Angeles", "San Francisco", "San Jose",
-                                           "Philadelphia", "Washington DC", "Austin"]),
+    usr_slots = [("loc", "location city", ["Pittsburgh", "New_York", "Boston", "Seattle",
+                                           "Los_Angeles", "San_Francisco", "San_Jose",
+                                           "Philadelphia", "Washington_DC", "Austin"]),
                  ("food_pref", "food preference", ["Thai", "Chinese", "Korean", "Japanese",
                                                    "American", "Italian", "Indian", "French",
                                                    "Greek", "Mexican", "Russian", "Hawaiian"])]
 
     sys_slots = [("open", "if it's open now", ["open", "closed"]),
                  ("price", "average price per person", ["cheap", "moderate", "expensive"]),
-                 ("parking", "if it has parking", ["street parking", "valet parking", "no parking"])]
+                 ("parking", "if it has parking", ["street_parking", "valet_parking", "no_parking"])]
 
     db_size = 100
 
@@ -137,15 +138,15 @@ class RestPittSpec(DomainSpec):
                                         "Recommend me a place to eat."]}
                 }
 
-    usr_slots = [("loc", "location city", ["Downtown", "CMU", "Forbes and Murray", "Craig",
-                                           "Waterfront", "Airport", "U Pitt", "Mellon Park",
-                                           "Lawrance", "Monroveil", "Shadyside", "Squrill Hill"]),
-                 ("food_pref", "food preference", ["healthy", "fried", "panned", "steamed", "hot pot",
+    usr_slots = [("loc", "location city", ['res_loc_' + i for i in ["Downtown", "CMU", "Forbes_and_Murray", "Craig",
+                                           "Waterfront", "Airport", "U_Pitt", "Mellon_Park",
+                                           "Lawrance", "Monroveil", "Shadyside", "Squrill_Hill"]]),
+                 ("food_pref", "food preference", ["healthy", "fried", "panned", "steamed", "hot_pot",
                                                    "grilled", "salad", "boiled", "raw", "stewed"])]
 
-    sys_slots = [("open", "if it's open now", ["open", "going to start", "going to close", "closed"]),
+    sys_slots = [("open", "if it's open now", ["open", "going_to_start", "going_to_close", "closed"]),
                  ("price", "average price per person", ["cheap", "average", "fancy"]),
-                 ("parking", "if it has parking", ["garage parking", "street parking", "no parking"])]
+                 ("parking", "if it has parking", ["garage_parking", "street_parking", "no_parking"])]
 
     db_size = 150
 
@@ -155,12 +156,12 @@ class BusSpec(DomainSpec):
     greet = "Ask me about bus information."
 
     nlg_spec = {"from_loc": {"inform": ["I am at %s.", "%s.", "Leaving from %s.", "At %s.", "Departure place is %s."],
-                             "request": ["Where are you leaving from?", "What's the departure place?"]},
+                             "request": ["Where are b leaving from?", "What's the departure place?"]},
 
                 "to_loc": {"inform": ["Going to %s.", "%s.", "Destination is %s.", "Go to %s.", "To %s"],
                            "request": ["Where are you going?", "Where do you want to take off?"]},
 
-                "datetime": {"inform": ["At %s.", "%s.", "I am leaving on %s.", "Departure time is %s."],
+                "bus_datetime": {"inform": ["At %s.", "%s.", "I am leaving on %s.", "Departure time is %s."],
                              "request": ["When are you going?", "What time do you need the bus?"]},
 
                 "arrive_in": {"inform": ["The bus will arrive in %s minutes.", "Arrive in %s minutes.",
@@ -181,18 +182,18 @@ class BusSpec(DomainSpec):
                                         "Recommend me a bus to take."]}
                 }
 
-    usr_slots = [("from_loc", "departure place", ["Downtown", "CMU", "Forbes and Murray", "Craig",
-                                                  "Waterfront", "Airport", "U Pitt", "Mellon Park",
-                                                  "Lawrance", "Monroveil", "Shadyside", "Squrill Hill"]),
-                 ("to_loc", "arrival place", ["Downtown", "CMU", "Forbes and Murray", "Craig",
-                                              "Waterfront", "Airport", "U Pitt", "Mellon Park",
-                                              "Lawrance", "Monroveil", "Shadyside", "Squrill Hill"]),
-                 ("datetime", "leaving time", ["today", "tomorrow", "tonight", "this morning",
-                                               "this afternoon"] + [str(t+1) for t in range(24)])
+    usr_slots = [("from_loc", "departure place", ['from_loc_' + i for i in ["Downtown", "CMU", "Forbes_and_Murray", "Craig",
+                                                  "Waterfront", "Airport", "U_Pitt", "Mellon_Park",
+                                                  "Lawrance", "Monroveil", "Shadyside", "Squrill_Hill"]]),
+                 ("to_loc", "arrival place", ['to_loc_' + i for i in ["Downtown", "CMU", "Forbes_and_Murray", "Craig",
+                                              "Waterfront", "Airport", "U_Pitt", "Mellon_Park",
+                                              "Lawrance", "Monroveil", "Shadyside", "Squrill_Hill"]]),
+                 ("bus_datetime", "leaving time", ['bus_' + i for i in ["today", "tomorrow", "tonight", "this_morning",
+                                               "this_afternoon"] + [str(t+1) for t in range(24)]])
                  ]
 
-    sys_slots = [("arrive_in", "how soon it arrives", [str(t) for t in range(0, 30, 5)]),
-                 ("duration", "how long it takes", [str(t) for t in range(0, 60, 5)])
+    sys_slots = [("arrive_in", "how soon it arrives", ['arrive_in_' + str(t) for t in range(0, 30, 5)]),
+                 ("duration", "how long it takes", ['duration_' + str(t) for t in range(0, 60, 5)])
                  ]
 
     db_size = 150
@@ -205,7 +206,7 @@ class WeatherSpec(DomainSpec):
     nlg_spec = {"loc": {"inform": ["I am at %s.", "%s.", "Weather at %s.", "At %s.", "In %s."],
                         "request": ["Which city are you interested in?", "Which place?"]},
 
-                "datetime": {"inform": ["Weather %s", "%s.", "I am interested in %s."],
+                "weather_datetime": {"inform": ["Weather %s", "%s.", "I am interested in %s."],
                              "request": ["What time's weather?", "What date are you interested?"]},
 
                 "temperature": {"inform": ["The temperature will be %s.", "The temperature that time will be %s."],
@@ -222,13 +223,13 @@ class WeatherSpec(DomainSpec):
                                         "What will the weather be?"]}
                 }
 
-    usr_slots = [("loc", "location city", ["Pittsburgh", "New York", "Boston", "Seattle",
-                                           "Los Angeles", "San Francisco", "San Jose",
-                                           "Philadelphia", "Washington DC", "Austin"]),
-                 ("datetime", "which time's weather?", ["today", "tomorrow", "tonight", "this morning",
-                                                        "the day after tomorrow", "this weekend"])]
+    usr_slots = [("loc", "location city", ["Pittsburgh", "New_York", "Boston", "Seattle",
+                                           "Los Angeles", "San_Francisco", "San_Jose",
+                                           "Philadelphia", "Washington_DC", "Austin"]),
+                 ("weather_datetime", "which time's weather?", ['weather_' + i for i in ["today", "tomorrow", "tonight", "this_morning",
+                                                        "the_day_after_tomorrow", "this_weekend"]])]
 
-    sys_slots = [("temperature", "the temperature", [str(t) for t in range(20, 40, 2)]),
+    sys_slots = [("temperature", "the temperature", ['temperature_' + str(t) for t in range(20, 40, 2)]),
                  ("weather_type", "the type", ["raining", "snowing", "windy", "sunny", "foggy", "cloudy"])]
 
     db_size = 40
@@ -282,9 +283,9 @@ class MovieSpec(DomainSpec):
                                         "Japan", "Germany", "Mexico", "Russia", "Thailand"])
                  ]
 
-    sys_slots = [("rating", "user rating", [str(t) for t in range(5)]),
-                 ("company", "the production company", ["20th Century Fox", "Sony", "MGM", "Walt Disney", "Universal"]),
-                 ("director", "the director's name", list(string.ascii_uppercase))
+    sys_slots = [("rating", "user rating", ['rating_' + str(t) for t in range(5)]),
+                 ("company", "the production company", ["20th_Century_Fox", "Sony", "MGM", "Walt_Disney", "Universal"]),
+                 ("director", "the director's name", ['director_' + i for i in list(string.ascii_uppercase)])
                  ]
 
     db_size = 200
@@ -342,35 +343,61 @@ if __name__ == "__main__":
     # gen_bot.gen_corpus("test", rest_pitt_spec, complexity.MixSpec, test_size)
     # gen_bot.gen_corpus("train", rest_pitt_spec, complexity.MixSpec, train_size)
 
-    data_size = 500
-    # gen_bot.gen_corpus("data", rest_spec, complexity.CleanSpec, data_size)
-    gen_bot.gen_corpus("data", rest_spec, complexity.MixSpec, data_size)
+    data_size = 1500
 
-    # gen_bot.gen_corpus("data", rest_style_spec, complexity.CleanSpec, data_size)
-    # gen_bot.gen_corpus("data", rest_style_spec, complexity.MixSpec, data_size)
+    idx = 0
 
-    # gen_bot.gen_corpus("data", bus_spec, complexity.CleanSpec, data_size)
-    # gen_bot.gen_corpus("data", bus_spec, complexity.MixSpec, data_size)
+    if len(sys.argv) > 1:
+      idx = int(sys.argv[1])
 
-    # gen_bot.gen_corpus("data", weather_spec, complexity.CleanSpec, data_size)
-    # gen_bot.gen_corpus("data", weather_spec, complexity.MixSpec, data_size)
+    # gen_bot.gen_corpus("1500_data_fixed_dom", rest_spec, complexity.CleanSpec, data_size)
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), rest_spec, complexity.MixSpec, data_size)
 
-    # gen_bot.gen_corpus("data", movie_spec, complexity.CleanSpec, data_size)
-    # gen_bot.gen_corpus("data", movie_spec, complexity.MixSpec, data_size)
+    # gen_bot.gen_corpus("1500_data_fixed_dom", rest_style_spec, complexity.CleanSpec, data_size)
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), rest_style_spec, complexity.MixSpec, data_size)
 
-    # gen_bot.gen_corpus("data", rest_pitt_spec, complexity.CleanSpec, data_size)
-    # gen_bot.gen_corpus("data", rest_pitt_spec, complexity.MixSpec, data_size)
+    # gen_bot.gen_corpus("1500_data_fixed_dom", bus_spec, complexity.CleanSpec, data_size)
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), bus_spec, complexity.MixSpec, data_size)
 
+    # gen_bot.gen_corpus("1500_data_fixed_dom", weather_spec, complexity.CleanSpec, data_size)
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), weather_spec, complexity.MixSpec, data_size)
 
+    # gen_bot.gen_corpus("1500_data_fixed_dom", movie_spec, complexity.CleanSpec, data_size)
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), movie_spec, complexity.MixSpec, data_size)
 
+    # gen_bot.gen_corpus("1500_data_fixed_dom", rest_pitt_spec, complexity.CleanSpec, data_size)
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), rest_pitt_spec, complexity.MixSpec, data_size)
 
+    # for data_size in [30, 45, 90]:
+    # data_size = 150
+    if len(sys.argv) > 2:
+      data_size = int(sys.argv[2]) 
 
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), movie_spec, complexity.MixSpec, data_size)
 
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), rest_pitt_spec, complexity.MixSpec, data_size)
 
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), rest_spec, complexity.MixSpec, data_size)
 
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), rest_style_spec, complexity.MixSpec, data_size)
 
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), weather_spec, complexity.MixSpec, data_size)
 
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), bus_spec, complexity.MixSpec, data_size)
 
+    # data_size = 2
+
+    # gen_bot.gen_corpus("1500_data_fixed", movie_spec, complexity.CleanSpec, data_size)
+    # gen_bot.gen_corpus("1500_data_fixed", movie_spec, complexity.MixSpec, data_size)
+
+    # gen_bot.gen_corpus("1500_data_fixed", rest_pitt_spec, complexity.CleanSpec, data_size)
+    # gen_bot.gen_corpus("1500_data_fixed", rest_pitt_spec, complexity.MixSpec, data_size)
+
+    # gen_bot.gen_corpus("1500_data_fixed", rest_spec, complexity.CleanSpec, data_size)
+    # gen_bot.gen_corpus("1500_data_fixed", rest_spec, complexity.MixSpec, data_size)
+
+    # gen_bot.gen_corpus("1500_data_fixed", rest_style_spec, complexity.CleanSpec, data_size)
+    # gen_bot.gen_corpus("1500_data_fixed", rest_style_spec, complexity.MixSpec, data_size)
 
 
 

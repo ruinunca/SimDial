@@ -170,6 +170,11 @@ class Generator(object):
             sys_r, sys_t, sys_as, sys_s = sys.step(noisy_usr_as, conf)
             sys_utt, sys_str_as = sys_nlg.generate_sent(sys_as, domain=domain)
 
+            # set domain name
+            domain_name = domain.name
+            if domain_name == "rest_pitt" or \
+                domain_name == "restaurant_style":
+                domain_name = "restaurant"
 
             while True:
 
@@ -196,7 +201,9 @@ class Generator(object):
 
                 else:
                     # append a new dialogue
+
                     usr_tmp_dict = {
+                                    # "transcript" : domain_name + " " + noisy_usr_utt,
                                     "transcript" : noisy_usr_utt,
                                     "slu"        : [] 
                                     }
@@ -223,8 +230,8 @@ class Generator(object):
                     })
 
 
-
                     sys_tmp_dict = {
+                                    # "sent" : domain_name + " " + sys_utt
                                     "sent" : sys_utt
                                     }
 
@@ -236,7 +243,7 @@ class Generator(object):
     
                     turn_num += 1
 
-
+            # print("turn_num: ", turn_num, '\n')
 
 
             dialogs.append({"dial" : dialog})       
@@ -284,5 +291,5 @@ class Generator(object):
         json_file = os.path.join(name, json_file)
         self.pprint(corpus, True, domain_spec, json_file)
         print("\nfinishing generating %s dialogue in domain: %s with complexity: %s \n" \
-             %(name, domain_spec.name, complexity_spec.__name__))
+             %(size, domain_spec.name, complexity_spec.__name__))
         # self.print_stats(corpus)
