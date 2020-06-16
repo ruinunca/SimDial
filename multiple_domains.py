@@ -309,39 +309,6 @@ if __name__ == "__main__":
     movie_spec = MovieSpec()
     weather_spec = WeatherSpec()
 
-    # # restaurant
-    # gen_bot.gen_corpus("test", rest_spec, complexity.CleanSpec, test_size)
-    # gen_bot.gen_corpus("test", rest_spec, complexity.MixSpec, test_size)
-    # gen_bot.gen_corpus("train", rest_spec, complexity.CleanSpec, train_size)
-    # gen_bot.gen_corpus("train", rest_spec, complexity.MixSpec, train_size)
-
-    # # restaurant style
-    # gen_bot.gen_corpus("test", rest_style_spec, complexity.CleanSpec, test_size)
-    # gen_bot.gen_corpus("test", rest_style_spec, complexity.MixSpec, test_size)
-    # gen_bot.gen_corpus("train", rest_style_spec, complexity.CleanSpec, train_size)
-    # gen_bot.gen_corpus("train", rest_style_spec, complexity.MixSpec, train_size)
-
-    # # bus
-    # gen_bot.gen_corpus("test", bus_spec, complexity.CleanSpec, test_size)
-    # gen_bot.gen_corpus("test", bus_spec, complexity.MixSpec, test_size)
-    # gen_bot.gen_corpus("train", bus_spec, complexity.CleanSpec, train_size)
-    # gen_bot.gen_corpus("train", bus_spec, complexity.MixSpec, train_size)
-
-    # # weather
-    # gen_bot.gen_corpus("test", weather_spec, complexity.CleanSpec, test_size)
-    # gen_bot.gen_corpus("test", weather_spec, complexity.MixSpec, test_size)
-    # gen_bot.gen_corpus("train", weather_spec, complexity.CleanSpec, train_size)
-    # gen_bot.gen_corpus("train", weather_spec, complexity.MixSpec, train_size)
-
-    # # movie
-    # gen_bot.gen_corpus("test", movie_spec, complexity.CleanSpec, test_size)
-    # gen_bot.gen_corpus("test", movie_spec, complexity.MixSpec, test_size)
-    # gen_bot.gen_corpus("train", movie_spec, complexity.CleanSpec, train_size)
-    # gen_bot.gen_corpus("train", movie_spec, complexity.MixSpec, train_size)
-
-    # # restaurant Pitt
-    # gen_bot.gen_corpus("test", rest_pitt_spec, complexity.MixSpec, test_size)
-    # gen_bot.gen_corpus("train", rest_pitt_spec, complexity.MixSpec, train_size)
 
     data_size = 1500
 
@@ -350,54 +317,30 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
       idx = int(sys.argv[1])
 
-    # gen_bot.gen_corpus("1500_data_fixed_dom", rest_spec, complexity.CleanSpec, data_size)
-    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), rest_spec, complexity.MixSpec, data_size)
-
-    # gen_bot.gen_corpus("1500_data_fixed_dom", rest_style_spec, complexity.CleanSpec, data_size)
-    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), rest_style_spec, complexity.MixSpec, data_size)
-
-    # gen_bot.gen_corpus("1500_data_fixed_dom", bus_spec, complexity.CleanSpec, data_size)
-    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), bus_spec, complexity.MixSpec, data_size)
-
-    # gen_bot.gen_corpus("1500_data_fixed_dom", weather_spec, complexity.CleanSpec, data_size)
-    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), weather_spec, complexity.MixSpec, data_size)
-
-    # gen_bot.gen_corpus("1500_data_fixed_dom", movie_spec, complexity.CleanSpec, data_size)
-    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), movie_spec, complexity.MixSpec, data_size)
-
-    # gen_bot.gen_corpus("1500_data_fixed_dom", rest_pitt_spec, complexity.CleanSpec, data_size)
-    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), rest_pitt_spec, complexity.MixSpec, data_size)
-
-    # for data_size in [30, 45, 90]:
-    # data_size = 150
     if len(sys.argv) > 2:
-      data_size = int(sys.argv[2]) 
+      data_size = int(sys.argv[2])
 
-    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), movie_spec, complexity.MixSpec, data_size)
 
-    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), rest_pitt_spec, complexity.MixSpec, data_size)
-
+    # # restaurant
     gen_bot.gen_corpus("1500_data_fixed_"+str(idx), rest_spec, complexity.MixSpec, data_size)
 
+    # # restaurant style
     gen_bot.gen_corpus("1500_data_fixed_"+str(idx), rest_style_spec, complexity.MixSpec, data_size)
 
-    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), weather_spec, complexity.MixSpec, data_size)
+    # # restaurant Pitt
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), rest_pitt_spec, complexity.MixSpec, data_size)
 
+    # # bus
     gen_bot.gen_corpus("1500_data_fixed_"+str(idx), bus_spec, complexity.MixSpec, data_size)
 
-    # data_size = 2
+    # # weather
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), weather_spec, complexity.MixSpec, data_size)
 
-    # gen_bot.gen_corpus("1500_data_fixed", movie_spec, complexity.CleanSpec, data_size)
-    # gen_bot.gen_corpus("1500_data_fixed", movie_spec, complexity.MixSpec, data_size)
+    # # movie
+    gen_bot.gen_corpus("1500_data_fixed_"+str(idx), movie_spec, complexity.MixSpec, data_size)
 
-    # gen_bot.gen_corpus("1500_data_fixed", rest_pitt_spec, complexity.CleanSpec, data_size)
-    # gen_bot.gen_corpus("1500_data_fixed", rest_pitt_spec, complexity.MixSpec, data_size)
 
-    # gen_bot.gen_corpus("1500_data_fixed", rest_spec, complexity.CleanSpec, data_size)
-    # gen_bot.gen_corpus("1500_data_fixed", rest_spec, complexity.MixSpec, data_size)
 
-    # gen_bot.gen_corpus("1500_data_fixed", rest_style_spec, complexity.CleanSpec, data_size)
-    # gen_bot.gen_corpus("1500_data_fixed", rest_style_spec, complexity.MixSpec, data_size)
 
 
 
