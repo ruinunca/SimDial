@@ -39,7 +39,7 @@ class Generator(object):
         :param dialogs: a list of dialogs generated
         :param output_file: None if print to STDOUT. Otherwise write the file in the path
         """
-        f = sys.stdout if output_file is None else open(output_file, "wb")
+        f = sys.stdout if output_file is None else open(output_file, "w")
 
         if in_json:
             # combo = {'dialogs': dialogs, 'meta': domain_spec.to_dict()}
@@ -68,7 +68,7 @@ class Generator(object):
 
         :param database: a database class generated in database.py
         """
-        f = sys.stdout if output_file is None else open(output_file, "wb")
+        f = sys.stdout if output_file is None else open(output_file, "w")
 
         if in_json:
             combo = []
@@ -93,7 +93,7 @@ class Generator(object):
 
     @staticmethod
     def print_OTGY(domain_spec, in_json, output_file=None):
-        f = sys.stdout if output_file is None else open(output_file, "wb")
+        f = sys.stdout if output_file is None else open(output_file, "w")
 
         if in_json:
             info_dict = {}

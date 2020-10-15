@@ -45,7 +45,7 @@ class EnvironmentNoise(AbstractNoise):
             elif a.act == UserAct.INFORM:
                 if np.random.rand() > conf:
                     slot, value = a.parameters[0]
-                    choices = range(self.dim_map[slot]) + [None]
+                    choices = list(range(self.dim_map[slot])) + [None]
                     a.parameters[0] = (slot, np.random.choice(choices))
 
             noisy_actions.append(a)

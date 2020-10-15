@@ -70,7 +70,7 @@ class Database(object):
         :return: a unique row in the searchable table
         """
         unique_rows = np.unique(self.table, axis=0)
-        idxes = range(len(unique_rows))
+        idxes = list(range(len(unique_rows)))
         np.random.shuffle(idxes)
         return unique_rows[idxes[0]]
 

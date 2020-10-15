@@ -73,7 +73,7 @@ class User(Agent):
 
     def __init__(self, domain, complexity):
         super(User, self).__init__(domain, complexity)
-        self.goal_cnt = np.random.choice(complexity.multi_goals.keys(), p=complexity.multi_goals.values())
+        self.goal_cnt = np.random.choice(np.asarray(list(complexity.multi_goals.keys())), p=list(complexity.multi_goals.values()))
         self.goal_ptr = 0
         self.usr_constrains, self.sys_goals = self._sample_goal()
         self.state = self.DialogState(self.sys_goals)
@@ -122,7 +122,7 @@ class User(Agent):
         else:
             self.goal_ptr += 1
             _, self.sys_goals = self._sample_goal()
-            change_key = np.random.choice(self.usr_constrains.keys())
+            change_key = np.random.choice(np.asarray(list(self.usr_constrains.keys())))
             change_slot = self.domain.get_usr_slot(change_key)
             old_value = self.usr_constrains[change_key]
             old_value = -1 if old_value is None else old_value
@@ -163,8 +163,8 @@ class User(Agent):
                 if slot_val == self.usr_constrains[slot_type] or self.usr_constrains[slot_type] is None:
                     return None
                 else:
-                    strategy = np.random.choice(self.complexity.reject_style.keys(),
-                                                p=self.complexity.reject_style.values())
+                    strategy = np.random.choice(np.asarray(list(self.complexity.reject_style.keys())),
+                                                p=list(self.complexity.reject_style.values()))
                     if strategy == "reject":
                         return Action(UserAct.DISCONFIRM, (slot_type, slot_val))
                     elif strategy == "reject+inform":
@@ -237,8 +237,8 @@ class User(Agent):
 
             elif self.domain.is_usr_slot(slot_type):
                 if len(self.domain.usr_slots) > 1:
-                    num_informs = np.random.choice(self.complexity.multi_slots.keys(),
-                                                   p=self.complexity.multi_slots.values(),
+                    num_informs = np.random.choice(np.asarray(list(self.complexity.multi_slots.keys())),
+                                                   p=list(self.complexity.multi_slots.values()),
                                                    replace=False)
                     if num_informs > 1:
                         candidates = [k for k, v in self.usr_constrains.items() if k != slot_type and v is not None]

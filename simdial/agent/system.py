@@ -6,6 +6,7 @@ import logging
 from collections import OrderedDict
 import numpy as np
 import copy
+import sys
 
 
 class BeliefSlot(object):
@@ -59,7 +60,12 @@ class BeliefSlot(object):
     def get_maxconf_value(self):
         if len(self.value_map) == 0:
             return None
-        max_s, max_v = max([(s, v) for v, s in self.value_map.items()])
+        # Substitute 'None' with 0, as 'None' in Python 2 is smaller than any int
+        value_map = copy.deepcopy(self.value_map)
+        value_map = {k if k is not None else -1: v for k, v in value_map.items()}
+        _, max_v = max([(s, v) for v, s in value_map.items()])
+        if max_v == -1:
+            return None
         return max_v
 
     def max_conf(self):
