@@ -27,14 +27,14 @@ for idx in 0 1 2 3 4 5 6 7 8 9; do
 
 
 		# # combine OTGY(slot values) file
-		if [ -f "../1500_data_fixed_0/r_w_b-OTGY.json"]; then
-			cp ../1500_data_fixed_0/r_w_b-OTGY.json ./
+		if [ -f "../1500_data_fixed_0/r_w_b-OTGY.json" ]; then
+			cp -f ../1500_data_fixed_0/r_w_b-OTGY.json ./
 		else
 			python3 ../combine_domain.py -data_path ./ -target_domain ''
 		fi
 
-		if [ -f "../1500_data_fixed_0/r_w_b_${data_size}m-OTGY.json"]; then
-			cp ../1500_data_fixed_0/r_w_b_${data_size}m-OTGY.json ./r_w_b_${data_size}m-OTGY.json
+		if [ -f "../1500_data_fixed_0/r_w_b_${data_size}m-OTGY.json" ]; then
+			cp -f ../1500_data_fixed_0/r_w_b_${data_size}m-OTGY.json ./r_w_b_${data_size}m-OTGY.json
 		else
 			python3 ../combine_domain.py -data_path ./
 		fi
